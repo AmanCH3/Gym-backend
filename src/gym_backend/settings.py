@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
     'member',
     'myauth'
 ]
@@ -138,5 +140,6 @@ AUTH_USER_MODEL = 'myauth.User'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  # Require authentication by default
+        'rest_framework.authentication.TokenAuthentication',  # Use token-based authentication'
     ]
 }
