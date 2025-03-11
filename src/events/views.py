@@ -4,14 +4,27 @@ from .serializers import DueSerializer, EventSerializer
 from django.utils.timezone import now
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny , IsAuthenticated , IsAdminUser
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [AllowAny]
+
+    @action(detail=False, methods=['get'])
+    def upcoming_events(self, request):
+        """
+        Returns a list of upcoming events.
+        """
+        upcoming_events = Event.objects.filter(event_date__gte=now().date())
+        serializer = self.get_serializer(upcoming_events, many=True)
+        return Response(serializer.data)
 
 class DueViewSet(viewsets.ModelViewSet):
     queryset = Due.objects.all()
     serializer_class = DueSerializer
+    permission_classes = [AllowAny]
+
 
     @action(detail=False, methods=['post'])
     def copy_expired_members(self, request):
