@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Members 
+from .models import Members  , MembershipType
 
 # Serializers define the API representation.
 class MemberSerializer(serializers.ModelSerializer):
@@ -11,6 +11,6 @@ class MemberSerializer(serializers.ModelSerializer):
 #==MemberType serializers======
 class MembershipTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Members
+        model = MembershipType
         fields = '__all__'
 

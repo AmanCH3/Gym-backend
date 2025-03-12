@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'member',
     'myauth' ,
-    'events'
+    'events' ,
+    'corsheaders',
+    'trainers',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
+
+
 ]
 
 ROOT_URLCONF = 'gym_backend.urls'
@@ -142,8 +150,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',  # Require authentication by default
         'rest_framework.authentication.TokenAuthentication',  # Use token-based authentication'
+        'rest_framework.authentication.SessionAuthentication',
     ] ,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAdminUser'
    ),
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
+ORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  
+]

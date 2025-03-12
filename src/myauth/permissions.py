@@ -1,16 +1,9 @@
 from rest_framework.permissions import BasePermission
 
-
 class IsAdmin(BasePermission):
-    """
-    Allows access only to admin users.
-    """
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.is_admin
+        return request.user.role == 'admin'
 
-class IsMember(BasePermission):
-    """
-    Allows access only to member users.
-    """
+class IsTrainer(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.is_member
+        return request.user.role == 'trainer'

@@ -7,14 +7,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'is_admin', 'is_member')
+        fields = ('username', 'password', 'role')  # Include 'role' in fields
 
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
-            is_admin=validated_data.get('is_admin', False),
-            is_member=validated_data.get('is_member', False)
+            role=validated_data.get('role', 'member')  # Default role is 'member'
         )
         return user
 
@@ -24,7 +23,6 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, data):
         user = authenticate(username=data['username'], password=data['password'])
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Invalid credentials.")
-    
+        if not user:
+            raise serializers.ValidationError("Invalid credentials.")
+        return user
