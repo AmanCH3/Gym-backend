@@ -8,7 +8,10 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 class TrainerViewSet(viewsets.ViewSet):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
     permission_classes = [AllowAny]
+
 
     def list(self, request):
         trainers = Trainer.objects.all()
